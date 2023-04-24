@@ -36,7 +36,7 @@ function Crud(){
         permission: empPermission,
       }),
     };
-    const res = await fetch('https://main.dshngqz5l8v9y.amplifyapp.com/api/crud',
+    const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud',
     postEmpdata
     );
     const response = await res.json();
@@ -61,7 +61,7 @@ function Crud(){
         "Content-Type": "application/json",
       },
     };
-    const res = await fetch('https://main.dshngqz5l8v9y.amplifyapp.com/api/crud', 
+    const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud', 
     getEmpdata
     );
     const response = await res.json();
@@ -85,7 +85,7 @@ function Crud(){
         cardUID: updateEmployeeCardId, 
       })
     };
-    const res = await fetch('https://main.dshngqz5l8v9y.amplifyapp.com/api/crud', 
+    const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud', 
     putEmpdata
     );
     const response = await res.json();
@@ -125,7 +125,7 @@ function Crud(){
         ID: id,
       })
     };
-    const res = await fetch('https://main.dshngqz5l8v9y.amplifyapp.com/api/crud', 
+    const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud', 
     deleteEmpdata
     );
     const response = await res.json();

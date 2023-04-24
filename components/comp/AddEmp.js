@@ -32,7 +32,7 @@ function AddEmp(){
             permission: empPermission,
           }),
         };
-        const res = await fetch('https://main.dshngqz5l8v9y.amplifyapp.com/api/crud',
+        const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud',
         postEmpdata
         );
         const response = await res.json();
