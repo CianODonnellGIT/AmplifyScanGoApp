@@ -9,6 +9,7 @@ function EditEmp(){
   const updateIdRef = useRef();
   const updateNameRef = useRef();
   const updateCardIdRef = useRef();
+  const updateRoleRef = useRef();
   const [employee, setEmployee] = useState([]);
   const [update, setUpdate] = useState(false);
   
@@ -17,7 +18,8 @@ function EditEmp(){
     const updateEmployeeId = updateIdRef.current.value;
     const updateEmployeeName = updateNameRef.current.value;
     const updateEmployeeCardId = updateCardIdRef.current.value;
-    
+    const updateEmployeeRole = updateRoleRef.current.value;
+
     if(!updateEmployeeId.length) return; // if nothing in the field, do nothing
     const putEmpdata = {
       method: "PUT",
@@ -28,6 +30,7 @@ function EditEmp(){
         ID: updateEmployeeId,
         Name: updateEmployeeName,   
         cardUID: updateEmployeeCardId, 
+        Role: updateEmployeeRole,
       })
     };
     const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud', 
@@ -40,6 +43,8 @@ function EditEmp(){
     const IdUpdated = parseFloat(response.response.employee.ID);
     const employeeUpdatedName = response.response.employee.Name;
     const employeeUpdatedEmpCardId = response.response.employee.cardUID;
+    const employeeUpdatedRole = response.response.employee.Role;
+
     //update state
     const datasStateAfterUpdate = employee.map((employee) => {
       if(employee.ID === IdUpdated ){
@@ -47,6 +52,7 @@ function EditEmp(){
           ...employee,
           Name: employeeUpdatedName,
           cardUID: employeeUpdatedEmpCardId,
+          Role: employeeUpdatedRole
         };
         return employeeUpdated;
       } else {
@@ -70,6 +76,8 @@ function EditEmp(){
               <input className = {styles.label} type='text' ref={updateIdRef}/>
               <h3>Employee Name:</h3>
               <input className = {styles.label} type='text' ref={updateNameRef}/>
+              <h3>Role:</h3>
+              <input className = {styles.label} type='text' ref={updateRoleRef}/>
               <h3>Card ID:</h3>
               <input className = {styles.label} type='text' ref={updateCardIdRef}/>
             </div>

@@ -12,6 +12,7 @@ function AddEmp(){
     const nameRef = useRef();
     const cardIdRef = useRef();
     const permissionRef = useRef();
+    const roleRef = useRef();
 
     const [employee, setEmployee] = useState([]);
     const [create, setCreate] = useState(false);
@@ -21,6 +22,8 @@ function AddEmp(){
         const employeeName = nameRef.current.value.trim();   //trim removes any white space at beginning & end    
         const employeeCardId = cardIdRef.current.value.trim();
         const empPermission = permissionRef.current.value.trim();
+        const empRole = roleRef.current.value.trim();
+
         const postEmpdata = {
           method: "POST",
           headers: {
@@ -30,6 +33,7 @@ function AddEmp(){
             Name: employeeName,   //Name is name of column in sql database
             cardUID: employeeCardId,
             permission: empPermission,
+            Role: empRole
           }),
         };
         const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud',
@@ -45,6 +49,7 @@ function AddEmp(){
             ID: newEmployee.ID,
             Name: newEmployee.Name,
             cardUID: newEmployee.cardUID,
+            Role: newEmployee.Role
           },
         ]);
         setCreate(true);
@@ -60,6 +65,8 @@ function AddEmp(){
             <div className={styles.input}>
               <h3>Name:</h3>
               <input className = {styles.label} type='text' ref={nameRef} />
+              <h3>Employee Role:</h3>
+              <input className = {styles.label} type='text' ref={roleRef}/>
               <h3>Card ID:</h3>
               <input className = {styles.label} type='text' ref={cardIdRef}/>
               <h3>Card Permission:</h3>

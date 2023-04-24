@@ -40,6 +40,7 @@ function DoorAccessLog(){
                             <div key={item.timestamp} className={styles.empList}>
                                 <span> Date Stamp: </span> {item.timestamp} |
                                 <span> Name: </span> {item.Name} |
+                                <span> Role: </span> {item.Role} |
                                 <span> Card ID: </span> {item.cardUID} |
                                 <span> Permission: </span> {item.permission}
                                  

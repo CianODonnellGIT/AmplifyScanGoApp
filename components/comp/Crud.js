@@ -11,10 +11,12 @@ function Crud(){
   const nameRef = useRef();
   const cardIdRef = useRef();
   const permissionRef = useRef();
+  const roleRef = useRef();
   const deleteIdRef = useRef();
   const updateIdRef = useRef();
   const updateNameRef = useRef();
   const updateCardIdRef = useRef();
+  const updateRoleRef = useRef();
   const [employee, setEmployee] = useState([]);
   const [update, setUpdate] = useState(false);
   const [create, setCreate] = useState(false);
@@ -25,6 +27,8 @@ function Crud(){
     const employeeName = nameRef.current.value.trim();   //trim removes any white space at beginning & end    
     const employeeCardId = cardIdRef.current.value.trim();
     const empPermission = permissionRef.current.value.trim();
+    const empRole = roleRef.current.value.trim();
+
     const postEmpdata = {
       method: "POST",
       headers: {
@@ -34,6 +38,7 @@ function Crud(){
         Name: employeeName,   //Name is name of column in sql database
         cardUID: employeeCardId,
         permission: empPermission,
+        Role: empRole
       }),
     };
     const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud',
@@ -49,6 +54,7 @@ function Crud(){
         ID: newEmployee.ID,
         Name: newEmployee.Name,
         cardUID: newEmployee.cardUID,
+        Role: newEmployee.Role
       },
     ]);
     setCreate(true);
@@ -72,6 +78,7 @@ function Crud(){
     const updateEmployeeId = updateIdRef.current.value;
     const updateEmployeeName = updateNameRef.current.value;
     const updateEmployeeCardId = updateCardIdRef.current.value;
+    const updateEmployeeRole = updateRoleRef.current.value;
     
     if(!updateEmployeeId.length) return; // if nothing in the field, do nothing
     const putEmpdata = {
@@ -83,6 +90,7 @@ function Crud(){
         ID: updateEmployeeId,
         Name: updateEmployeeName,   
         cardUID: updateEmployeeCardId, 
+        Role: updateEmployeeRole,
       })
     };
     const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud', 
@@ -95,6 +103,8 @@ function Crud(){
     const IdUpdated = parseFloat(response.response.employee.ID);
     const employeeUpdatedName = response.response.employee.Name;
     const employeeUpdatedEmpCardId = response.response.employee.cardUID;
+    const employeeUpdatedRole = response.response.employee.Role;
+
     //update state
     const datasStateAfterUpdate = employee.map((employee) => {
       if(employee.ID === IdUpdated ){
@@ -102,6 +112,7 @@ function Crud(){
           ...employee,
           Name: employeeUpdatedName,
           cardUID: employeeUpdatedEmpCardId,
+          Role: employeeUpdatedRole
         };
         return employeeUpdated;
       } else {
@@ -154,6 +165,7 @@ function Crud(){
                   <div key={item.ID} className={styles.empList}>
                     <span> Employee ID: </span> {item.ID} |
                     <span> Name: </span>{item.Name} |
+                    <span> Role: </span>{item.Role} |
                     <span> Card ID: </span>{item.cardUID} |
                     <span> Access: </span>{item.permission}
                     <span> </span><span> </span>
@@ -173,6 +185,8 @@ function Crud(){
             <div className={styles.input}>
               <h3>Name:</h3>
               <input className = {styles.label} type='text' ref={nameRef} />
+              <h3>Employee Role:</h3>
+              <input className = {styles.label} type='text' ref={roleRef}/>
               <h3>Card ID:</h3>
               <input className = {styles.label} type='text' ref={cardIdRef}/>
               <h3>Card Permission:</h3>
@@ -201,6 +215,8 @@ function Crud(){
               <input className = {styles.label} type='text' ref={updateIdRef}/>
               <h3>Employee Name:</h3>
               <input className = {styles.label} type='text' ref={updateNameRef}/>
+              <h3>Role:</h3>
+              <input className = {styles.label} type='text' ref={updateRoleRef}/>
               <h3>Card ID:</h3>
               <input className = {styles.label} type='text' ref={updateCardIdRef}/>
             </div>

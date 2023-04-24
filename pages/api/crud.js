@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       value: [],
     })
     const employee1 = await query({
-      query: "SELECT E.ID, E.Name, E.cardUID, I.timestamp, permission FROM fypdb.iot I JOIN fypdb.employees E ON I.cardUID = E.cardUID ORDER BY I.timestamp DESC;",
+      query: "SELECT E.ID, E.Name, E.cardUID, I.timestamp, permission, Role FROM fypdb.iot I JOIN fypdb.employees E ON I.cardUID = E.cardUID ORDER BY I.timestamp DESC;",
       value: [],
     })
 
@@ -27,9 +27,10 @@ export default async function handler(req, res) {
     const employeeName = req.body.Name;
     const cardID = req.body.cardUID;
     const permission = req.body.permission;
+    const role = req.body.Role;
     const addEmployee = await query({
-      query: "INSERT INTO employees (Name, cardUID, permission) VALUES (?, ?, ?)",
-      value: [employeeName, cardID, permission],
+      query: "INSERT INTO employees (Name, cardUID, permission, Role) VALUES (?, ?, ?, ?)",
+      value: [employeeName, cardID, permission, role],
     });
     if(addEmployee.insertId){
       message = "success";
@@ -42,6 +43,7 @@ export default async function handler(req, res) {
       name: employeeName,
       code: cardID,
       perm: permission,
+      role: role,
     };
 
     res.status(200).json({ response: {message: message, employee: employee} });
@@ -51,9 +53,10 @@ export default async function handler(req, res) {
     const employeeID = req.body.ID;  //ID is same as sql column name
     const employeeName = req.body.Name; //Name is same as sql column name
     const cardID = req.body.cardUID;   //cardUID is same as sql column name
+    const role = req.body.Role;
     const updateEmployee = await query({
-      query: "UPDATE employees SET Name =?,cardUID=? WHERE ID = ?",
-      value: [employeeName, cardID, employeeID],
+      query: "UPDATE employees SET Name =?,cardUID=?,Role=? WHERE ID = ?",
+      value: [employeeName, cardID, employeeID, role],
     });
 
     const result = updateEmployee.affectedRows;
@@ -67,6 +70,8 @@ export default async function handler(req, res) {
       id: employeeID,
       name: employeeName,
       code: cardID,
+      role: role,
+      
     };
 
     res.status(200).json({ response: {employee: employee, message: message} });
