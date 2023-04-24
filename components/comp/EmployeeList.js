@@ -6,8 +6,10 @@ import { useState, useRef, useEffect } from 'react'
 export default EmpList;
 
 function EmpList(){
-  
+
   const [employee, setEmployee] = useState([]);
+  const [deleted, setDelete] = useState(false);
+
 
   async function getEmployee(){
     const getEmpdata = {
