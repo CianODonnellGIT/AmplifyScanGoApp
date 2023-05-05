@@ -1,26 +1,30 @@
+/*
+This code was inspired by the following reference
+    GitHub, "olbega/nextjs-crud-mysql" [Online]. Available: https://github.com/oelbaga/nextjs-crud-mysql.
+*/
 import styles from '../comp/EditEmployee.module.css'
 
 import { useState, useRef, useEffect } from 'react'
 
 export default EditEmp;
 
-function EditEmp(){
-  
+function EditEmp() {
+
   const updateIdRef = useRef();
   const updateNameRef = useRef();
   const updateCardIdRef = useRef();
   const updateRoleRef = useRef();
   const [employee, setEmployee] = useState([]);
   const [update, setUpdate] = useState(false);
-  
 
-  async function updateEmployee(){
+
+  async function updateEmployee() {
     const updateEmployeeId = updateIdRef.current.value;
     const updateEmployeeName = updateNameRef.current.value;
     const updateEmployeeCardId = updateCardIdRef.current.value;
     const updateEmployeeRole = updateRoleRef.current.value;
 
-    if(!updateEmployeeId.length) return; // if nothing in the field, do nothing
+    if (!updateEmployeeId.length) return; // if nothing in the field, do nothing
     const putEmpdata = {
       method: "PUT",
       headers: {
@@ -28,17 +32,17 @@ function EditEmp(){
       },
       body: JSON.stringify({
         ID: updateEmployeeId,
-        Name: updateEmployeeName,   
-        cardUID: updateEmployeeCardId, 
+        Name: updateEmployeeName,
+        cardUID: updateEmployeeCardId,
         Role: updateEmployeeRole,
       })
     };
-    const res = await fetch('https://main.d2xu1i4qh95c6u.amplifyapp.com/api/crud', 
-    putEmpdata
+    const res = await fetch('https://main.dshngqz5l8v9y.amplifyapp.com/api/crud',
+      putEmpdata
     );
     const response = await res.json();
 
-    if(response.response.message != "success") return;
+    if (response.response.message != "success") return;
 
     const IdUpdated = parseFloat(response.response.employee.ID);
     const employeeUpdatedName = response.response.employee.Name;
@@ -47,12 +51,12 @@ function EditEmp(){
 
     //update state
     const datasStateAfterUpdate = employee.map((employee) => {
-      if(employee.ID === IdUpdated ){
+      if (employee.ID === IdUpdated) {
         const employeeUpdated = {
           ...employee,
           Name: employeeUpdatedName,
           cardUID: employeeUpdatedEmpCardId,
-          Role: employeeUpdatedRole
+          Role: employeeUpdatedRole,
         };
         return employeeUpdated;
       } else {
@@ -65,21 +69,21 @@ function EditEmp(){
     setEmployee(datasStateAfterUpdate);
   }
 
-  return(
+  return (
     <>
-    <div className={styles.container}>
+      <div className={styles.container}>
         <section>
           <div className={styles.update}>
             <h2>Edit Employee Information</h2>
             <div className={styles.input}>
               <h3>Choose ID:</h3>
-              <input className = {styles.label} type='text' ref={updateIdRef}/>
+              <input className={styles.label} type='text' ref={updateIdRef} />
               <h3>Employee Name:</h3>
-              <input className = {styles.label} type='text' ref={updateNameRef}/>
+              <input className={styles.label} type='text' ref={updateNameRef} />
               <h3>Role:</h3>
-              <input className = {styles.label} type='text' ref={updateRoleRef}/>
+              <input className={styles.label} type='text' ref={updateRoleRef} />
               <h3>Card ID:</h3>
-              <input className = {styles.label} type='text' ref={updateCardIdRef}/>
+              <input className={styles.label} type='text' ref={updateCardIdRef} />
             </div>
             <div>
               <input
@@ -88,11 +92,11 @@ function EditEmp(){
                 type='button'
                 onClick={updateEmployee}
               />
-           </div>
-           {update ? <div className={styles.success}>Success!</div> : null}
+            </div>
+            {update ? <div className={styles.success}>Success!</div> : null}
           </div>
         </section>
-        </div>
+      </div>
     </>
   )
 }
